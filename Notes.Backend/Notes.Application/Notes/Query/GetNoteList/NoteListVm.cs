@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Notes.Application.Notes.Query.GetNoteList
 {
-    internal class NoteListVm
+    public class NoteListVm
     {
         public IList<NoteLookupDto> Notes { get; set; }
     }

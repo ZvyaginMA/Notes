@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Notes.Application.Common.Mapping
 {
-    internal class AssemblyMappingProfile : Profile
+    public class AssemblyMappingProfile : Profile
     {
         public AssemblyMappingProfile(Assembly assembly) =>
             ApplyMappingsFromAssemply(assembly);
