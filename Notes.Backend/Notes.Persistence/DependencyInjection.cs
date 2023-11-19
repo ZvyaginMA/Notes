@@ -22,7 +22,6 @@ namespace Notes.Persistence
             });
             services.AddScoped<INotesDbContext>(provider =>
                 provider.GetService<NotesDbContext>());
-
             return services;
         }
     }

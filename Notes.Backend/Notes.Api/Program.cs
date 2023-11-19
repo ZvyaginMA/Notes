@@ -13,6 +13,7 @@ builder.Services.AddAutoMapper(config =>
 });
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddControllers();
 builder.Services.AddCors(options=>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -24,6 +25,18 @@ builder.Services.AddCors(options=>
 });
 
 var app = builder.Build();
+try
+{
+    using(var serviceScope = app.Services.CreateScope())
+    {
+        var dbContext = serviceScope.ServiceProvider.GetRequiredService<NotesDbContext>();
+        DbInitializer.Initialize(dbContext);
+    }
+}
+catch
+{
+
+}
 app.UseRouting();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
