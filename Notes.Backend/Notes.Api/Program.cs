@@ -3,6 +3,7 @@ using Notes.Application.Interfaces;
 using System.Reflection;
 using Notes.Application;
 using Notes.Persistence;
+using Notes.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,7 @@ catch
 {
 
 }
+app.UseCustomExceptionHandlerMiddleware();
 app.UseRouting();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
