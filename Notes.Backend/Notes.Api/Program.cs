@@ -38,7 +38,7 @@ catch
 {
 
 }
-app.UseCustomExceptionHandlerMiddleware();
+app.UseCustomExceptionHandler();
 app.UseRouting();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
