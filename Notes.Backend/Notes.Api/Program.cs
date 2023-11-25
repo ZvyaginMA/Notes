@@ -4,6 +4,7 @@ using System.Reflection;
 using Notes.Application;
 using Notes.Persistence;
 using Notes.Api.Middleware;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,20 @@ builder.Services.AddCors(options=>
         policy.AllowAnyOrigin();
     });
 });
+builder.Services.AddAuthentication(config =>
+{
+    config.DefaultAuthenticateScheme = 
+    JwtBearerDefaults.AuthenticationScheme;
+    config.DefaultChallengeScheme =
+    JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer("Bearer",opt=>
+    {
+        opt.Authority = "https://localhost:7162/";
+        opt.Audience = "NotesApi";
+        opt.RequireHttpsMetadata = false;
+    });
+
 
 var app = builder.Build();
 try
@@ -42,6 +57,8 @@ app.UseCustomExceptionHandler();
 app.UseRouting();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();

@@ -24,6 +24,8 @@ namespace Notes.Identity.Data
                 entity.ToTable(name: "UserTokens"));
             builder.Entity<IdentityRoleClaim<string>>(entity =>
                 entity.ToTable(name: "RoleClaims"));
+
+            builder.ApplyConfiguration(new AppUserConfiguration());
         }
     }
 }

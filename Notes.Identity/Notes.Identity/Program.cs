@@ -7,6 +7,7 @@ using Notes.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Notes.Identity.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +42,7 @@ builder.Services.ConfigureApplicationCookie(config =>
     config.LoginPath = "/Auth/Login";
     config.LogoutPath = "/Auth/logout";
 });
-
+builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 using (var serviceScope = app.Services.CreateScope())
@@ -58,8 +59,16 @@ using (var serviceScope = app.Services.CreateScope())
     }
 }
 
-
+app.UseStaticFiles( new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "Styles")),
+    RequestPath= "/styles"
+});
 app.UseRouting();
 app.UseIdentityServer();
-app.MapGet("/", () => "Hello World!");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapDefaultControllerRoute();
+});
 app.Run();
