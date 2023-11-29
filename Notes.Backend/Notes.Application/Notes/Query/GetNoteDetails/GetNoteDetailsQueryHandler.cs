@@ -7,13 +7,13 @@ using Notes.Domain;
 
 namespace Notes.Application.Notes.Query.GetNoteDetails
 {
-    internal class GetNoteDetailsQueryHandler
+    public class GetNoteDetailsQueryHandler
         : IRequestHandler<GetNoteDetailsQuery, NoteDetailsVm>
     {
         private readonly INotesDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public GetNoteDetailsQueryHandler(IMapper mapper, INotesDbContext dbContext)
+        public GetNoteDetailsQueryHandler(INotesDbContext dbContext, IMapper mapper)
         {
             _mapper = mapper;
             _dbContext = dbContext;

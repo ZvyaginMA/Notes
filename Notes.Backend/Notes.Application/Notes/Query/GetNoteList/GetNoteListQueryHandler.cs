@@ -6,7 +6,7 @@ using Notes.Application.Interfaces;
 
 namespace Notes.Application.Notes.Query.GetNoteList
 {
-    internal class GetNoteListQueryHandler : IRequestHandler<GetNoteListQuery, NoteListVm>
+    public class GetNoteListQueryHandler : IRequestHandler<GetNoteListQuery, NoteListVm>
     {
         private readonly INotesDbContext _dbContext;
         private readonly IMapper _mapper;
