@@ -1,13 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Notes.Application.Common.Exceptions;
-using Notes.Application.Notes.Commands.DeleteCommand;
 using Notes.Application.Notes.Commands.UpdateNote;
 using Notes.Tests.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Notes.Tests.Notes.Commands
@@ -24,7 +18,7 @@ namespace Notes.Tests.Notes.Commands
                 new UpdateNoteCommand
                 {
                     Id = NotesContextFactory.NoteIdForUpdate,
-                    UserId = NotesContextFactory.UserAId,
+                    UserId = NotesContextFactory.UserBId,
                     Title = updateTitle
                 }, CancellationToken.None);
 
@@ -45,7 +39,7 @@ namespace Notes.Tests.Notes.Commands
                     new UpdateNoteCommand
                     {
                         Id = Guid.NewGuid(),
-                        UserId = NotesContextFactory.UserAId
+                        UserId = NotesContextFactory.UserBId
                     }, CancellationToken.None));
         }
 
@@ -59,7 +53,9 @@ namespace Notes.Tests.Notes.Commands
                     new UpdateNoteCommand
                     {
                         Id = NotesContextFactory.NoteIdForUpdate,
-                        UserId = NotesContextFactory.UserBId
+                        UserId = NotesContextFactory.UserAId,
+                        Details = "",
+                        Title = "",
                     }, CancellationToken.None));
         }
     }

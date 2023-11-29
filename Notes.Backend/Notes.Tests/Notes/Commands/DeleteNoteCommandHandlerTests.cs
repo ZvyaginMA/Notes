@@ -50,7 +50,8 @@ namespace Notes.Tests.Notes.Commands
                 new CreateNoteCommand
                 {
                     Title = "Notetitle",
-                    UserId = NotesContextFactory.UserAId
+                    UserId = NotesContextFactory.UserAId,
+                    Details = "Details",
                 }, CancellationToken.None);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
