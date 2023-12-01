@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Notes.Application.Common.Exceptions;
+using Notes.Application.Notes.Commands.UpdateNote;
 using Notes.Application.Notes.Query.GetNoteDetails;
 using Notes.Persistence;
 using Notes.Tests.Common;
@@ -39,6 +41,19 @@ namespace Notes.Tests.Notes.Queries
             result.ShouldBeOfType<NoteDetailsVm>();
             result.Title.ShouldBe("Title2");
             result.CreationDate.ShouldBe(DateTime.Today);
+        }
+
+        [Fact]
+        public async Task GetNoteDetailsQueryHandler_FailOnWrongUserId()
+        {
+            var handler = new GetNoteDetailsQueryHandler(Context, Mapper);
+
+            await Assert.ThrowsAsync<NotFoundException>(async () => await handler.Handle(
+                new GetNoteDetailsQuery
+                {
+                    UserId = NotesContextFactory.UserAId,
+                    Id = Guid.Parse("27fa3329-866c-46b4-bdcd-9c8387aa85dd")
+                }, CancellationToken.None));
         }
     }
 }
