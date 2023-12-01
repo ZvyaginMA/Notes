@@ -38,7 +38,13 @@ builder.Services.AddAuthentication(config =>
         opt.Audience = "NotesApi";
         opt.RequireHttpsMetadata = false;
     });
-
+builder.Services.AddSwaggerGen(config =>
+{
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    config.IncludeXmlComments(xmlPath);
+});
+builder.Services.AddApiVersioning();
 
 var app = builder.Build();
 try
@@ -53,12 +59,19 @@ catch
 {
 
 }
+app.UseSwagger();
+app.UseSwaggerUI(config =>
+{
+    config.RoutePrefix = string.Empty;
+    config.SwaggerEndpoint("swagger/v1/swagger.json", "Note Api");// можно переключать схемы
+});
 app.UseCustomExceptionHandler();
 app.UseRouting();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseApiVersioning();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
